@@ -27,7 +27,6 @@ function clickCard() {
             selectedCards.push(event.target.id)
             
             if (selectedCards.length === 2) {
-                console.log('selectedCards.length === 2')
                 if (selectedCards[0] === selectedCards[1]) {
                     $('.guess-game').find('.unhidden').toggleClass('unhidden matched')
                 }
