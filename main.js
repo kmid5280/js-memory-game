@@ -1,4 +1,6 @@
-const cardList = 'AABBCCDDEEFFGGHH'.split('')
+const cardList = 'AABBCCDD'.split('')
+let selectedCards = []
+let points = 0
 
 function displayCards(cards) {
     let arr = cards
@@ -10,28 +12,37 @@ function displayCards(cards) {
 
     for (i=0; i<arr.length; i++) {
         $('.guess-game').append(`
-            <div class="card col-4" id=${arr[i]}>${arr[i]}</div>
+            <div class="card col-4 hidden" index=${i} id=${arr[i]}>${arr[i]}</div>
         `)
     }
+    
     clickCard()
 }
 
 function clickCard() {
-    let array = []
-    let points = 0
     $('.card').on('click', event => {
         event.preventDefault()
-        console.log(event.target.id)
-        array.push(event.target.id)
-        console.log(array)
-        if (array.length === 2) {
-            array[0] === array[1]
-                ?points++
-                :points
-            array = []
+        if ($(event.target).hasClass('hidden')) {
+            $(event.target).toggleClass('hidden unhidden')
+            selectedCards.push(event.target.id)
+            
+            if (selectedCards.length === 2) {
+                console.log('selectedCards.length === 2')
+                if (selectedCards[0] === selectedCards[1]) {
+                    $('.guess-game').find('.unhidden').toggleClass('unhidden matched')
+                }
+                else {
+                    setTimeout(() => {
+                        $('.guess-game').find('.unhidden').toggleClass('unhidden hidden')
+                    }, 1200)
+                    
+                }
+                selectedCards = []
+            }
         }
-        console.log(points)
     })
+
 }
+
 
 displayCards(cardList)
